@@ -10,11 +10,11 @@
 
 | 文档 | 说明 |
 |------|------|
-| [接入指南](./integration-guide.md) | 快速开始、接入流程 |
-| [认证机制](./authentication.md) | HMAC-SHA256 签名算法详解 |
-| [SDK 示例](./sdk-examples.md) | Python、Java、Go、JavaScript、cURL 示例代码 |
-| [错误码参考](./error-codes.md) | 完整错误码列表及解决方案 |
-| [Webhook 指南](./webhook-guide.md) | 异步通知对接说明 |
+| [接入指南](../common/integration-guide.md) | 快速开始、接入流程 |
+| [认证机制](../common/authentication.md) | HMAC-SHA256 签名算法详解 |
+| [SDK 示例](../common/sdk-examples.md) | Python、Java、Go、JavaScript、cURL 示例代码 |
+| [错误码参考](../common/error-codes.md) | 完整错误码列表及解决方案 |
+| [Webhook 指南](../common/webhook-guide.md) | 异步通知对接说明 |
 | [OpenAPI 规范](../openapi/openapi.external.yaml) | Swagger/OpenAPI 3.0 规范文件 |
 
 ---
@@ -159,7 +159,7 @@ X-Timestamp: {unix_timestamp}
 X-Signature: {hmac_sha256_signature}
 ```
 
-详见 [认证机制](./authentication.md)。
+详见 [认证机制](../common/authentication.md)。
 
 ### 响应格式
 
