@@ -8,14 +8,14 @@
 
 ## 快速链接
 
-| 文档 | 说明 |
-|------|------|
-| [接入指南](../common/integration-guide.md) | 快速开始、接入流程 |
-| [认证机制](../common/authentication.md) | HMAC-SHA256 签名算法详解 |
-| [SDK 示例](../common/sdk-examples.md) | Python、Java、Go、JavaScript、cURL 示例代码 |
-| [错误码参考](../common/error-codes.md) | 完整错误码列表及解决方案 |
+| 文档                                       | 说明 |
+|------------------------------------------|------|
+| [接入指南](../common/integration-guide.md)   | 快速开始、接入流程 |
+| [认证机制](../common/authentication.md)      | HMAC-SHA256 签名算法详解 |
+| [SDK 示例](../common/sdk-examples.md)      | Python、Java、Go、JavaScript、cURL 示例代码 |
+| [错误码参考](../common/error-codes.md)        | 完整错误码列表及解决方案 |
 | [Webhook 指南](../common/webhook-guide.md) | 异步通知对接说明 |
-| [OpenAPI 规范](../openapi/openapi.external.yaml) | Swagger/OpenAPI 3.0 规范文件 |
+| [OpenAPI 规范](../openapi/mall.yaml)       | Swagger/OpenAPI 3.0 规范文件 |
 
 ---
 
@@ -23,7 +23,7 @@
 
 | 环境 | Base URL | 说明 |
 |------|----------|------|
-| 沙箱环境 | `http://43.133.43.2/openapi/points` | 测试环境，用于开发调试 |
+| 沙箱环境 | `http://43.156.107.149:81/openapi/points` | 测试环境，用于开发调试 |
 | 生产环境 | 待定 | 正式环境，数据真实有效 |
 
 ---
@@ -197,7 +197,7 @@ X-Signature: {hmac_sha256_signature}
 1. 下载 [Postman Collection](../openapi/postman/points-mall.postman_collection.json)
 2. 在 Postman 中导入 Collection
 3. 配置环境变量：
-   - `baseUrl`: `http://43.133.43.2/openapi/points`
+   - `baseUrl`: `http://43.156.107.149:81/openapi/points`
    - `apiKey`: 您的 API Key
    - `apiSecret`: 您的 Secret
 4. 手动添加认证头（或配置 Pre-request Script）

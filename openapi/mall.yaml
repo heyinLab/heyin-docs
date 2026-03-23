@@ -1,0 +1,2773 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: "积分商城 OpenAPI"
+    version: 1.0.0
+    description: |-
+        积分商城 OpenAPI 为企业提供积分兑换、商品管理、订单处理等能力的开放接口。
+servers:
+    - url: http://43.156.107.149:81
+      description: 沙箱环境 (测试)
+paths:
+    /openapi/points/auth/session/refresh:
+        post:
+            tags:
+                - 免登票据认证服务
+            "summary": "刷新会话"
+            description: 刷新会话
+            operationId: AuthTicketService_RefreshSession
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RefreshSessionResponse'
+    /openapi/points/auth/ticket/generate:
+        post:
+            tags:
+                - 免登票据认证服务
+            "summary": "生成入场票据"
+            description: 生成入场票据
+            operationId: AuthTicketService_GenerateTicket
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/GenerateTicketRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GenerateTicketResponse'
+    /openapi/points/auth/ticket/verify:
+        get:
+            tags:
+                - 免登票据认证服务
+            "summary": "验证票据并建立会话"
+            description: 验证票据并建立会话
+            operationId: AuthTicketService_VerifyTicket
+            parameters:
+                - name: ticketToken
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/VerifyTicketResponse'
+    /openapi/points/cards/{cardId}:
+        delete:
+            tags:
+                - 商品管理服务
+            "summary": "删除卡密"
+            description: 删除卡密
+            operationId: GoodsManagement_DeleteCard
+            parameters:
+                - name: cardId
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DeleteCardReply'
+    /openapi/points/cards/{cardId}/status:
+        put:
+            tags:
+                - 商品管理服务
+            "summary": "更新卡密状态"
+            description: 更新卡密状态
+            operationId: GoodsManagement_UpdateCardStatus
+            parameters:
+                - name: cardId
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateCardStatusRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/UpdateCardStatusReply'
+    /openapi/points/good/cards/batch/{goodsId}:
+        post:
+            tags:
+                - 商品管理服务
+            "summary": "批量上传卡密（虚拟卡商品 - 手动输入）"
+            description: 批量上传卡密（虚拟卡商品 - 手动输入）
+            operationId: GoodsManagement_BatchUploadCards
+            parameters:
+                - name: goodsId
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/BatchUploadCardsRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/BatchUploadCardsReply'
+    /openapi/points/goods:
+        get:
+            tags:
+                - 商品管理服务
+            "summary": "获取商品列表"
+            description: 获取商品列表
+            operationId: GoodsManagement_ListGoodsManagement
+            parameters:
+                - name: page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: categoryId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: type
+                  in: query
+                  schema:
+                    enum:
+                        - GOODS_TYPE_UNSPECIFIED
+                        - PHYSICAL
+                        - VIRTUAL
+                    type: string
+                    format: enum
+                - name: status
+                  in: query
+                  schema:
+                    enum:
+                        - GOODS_STATUS_UNSPECIFIED
+                        - ON_SALE
+                        - OFF_SALE
+                    type: string
+                    format: enum
+                - name: search
+                  in: query
+                  schema:
+                    type: string
+                - name: lang
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListGoodsManagementReply'
+        post:
+            tags:
+                - 商品管理服务
+            "summary": "创建商品"
+            description: 创建商品
+            operationId: GoodsManagement_CreateGoodsManagement
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateGoodsManagementRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CreateGoodsManagementReply'
+    /openapi/points/goods/cards/import/{goodsId}:
+        post:
+            tags:
+                - 商品管理服务
+            "summary": "Excel 批量导入卡密（虚拟卡商品 - Excel 文件）"
+            description: Excel 批量导入卡密（虚拟卡商品 - Excel 文件）
+            operationId: GoodsManagement_ImportCardsFromExcel
+            parameters:
+                - name: goodsId
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ImportCardsFromExcelRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ImportCardsFromExcelReply'
+    /openapi/points/goods/cards/{goodsId}:
+        get:
+            tags:
+                - 商品管理服务
+            "summary": "获取卡密列表"
+            description: 获取卡密列表
+            operationId: GoodsManagement_ListCards
+            parameters:
+                - name: goodsId
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: status
+                  in: query
+                  schema:
+                    enum:
+                        - CARD_STATUS_UNSPECIFIED
+                        - AVAILABLE
+                        - SOLD
+                        - INVALID
+                    type: string
+                    format: enum
+                - name: search
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListCardsReply'
+    /openapi/points/goods/{id}:
+        get:
+            tags:
+                - 商品管理服务
+            "summary": "获取商品详情"
+            description: 获取商品详情
+            operationId: GoodsManagement_GetGoodsManagement
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetGoodsManagementReply'
+        put:
+            tags:
+                - 商品管理服务
+            "summary": "更新商品"
+            description: 更新商品
+            operationId: GoodsManagement_UpdateGoodsManagement
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateGoodsManagementRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/UpdateGoodsManagementReply'
+        delete:
+            tags:
+                - 商品管理服务
+            "summary": "删除商品"
+            description: 删除商品
+            operationId: GoodsManagement_DeleteGoodsManagement
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DeleteGoodsManagementReply'
+    /openapi/points/logistics-companies:
+        get:
+            tags:
+                - 物流管理服务
+            "summary": "获取物流公司列表"
+            description: 获取物流公司列表
+            operationId: LogisticsManagementService_ListLogisticsCompanies
+            parameters:
+                - name: page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: status
+                  in: query
+                  schema:
+                    type: boolean
+                - name: search
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListLogisticsCompaniesResponse'
+        post:
+            tags:
+                - 物流管理服务
+            "summary": "创建物流公司"
+            description: 创建物流公司
+            operationId: LogisticsManagementService_CreateLogisticsCompany
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateLogisticsCompanyRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CreateLogisticsCompanyResponse'
+    /openapi/points/logistics-companies/{id}:
+        get:
+            tags:
+                - 物流管理服务
+            "summary": "获取物流公司详情"
+            description: 获取物流公司详情
+            operationId: LogisticsManagementService_GetLogisticsCompany
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetLogisticsCompanyResponse'
+        put:
+            tags:
+                - 物流管理服务
+            "summary": "更新物流公司"
+            description: 更新物流公司
+            operationId: LogisticsManagementService_UpdateLogisticsCompany
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateLogisticsCompanyRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/UpdateLogisticsCompanyResponse'
+        delete:
+            tags:
+                - 物流管理服务
+            "summary": "删除物流公司"
+            description: 删除物流公司
+            operationId: LogisticsManagementService_DeleteLogisticsCompany
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DeleteLogisticsCompanyResponse'
+    /openapi/points/mall/addresses:
+        get:
+            tags:
+                - MallService
+            "summary": "获取收货地址列表"
+            description: 获取收货地址列表
+            operationId: MallService_ListAddresses
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListMallAddressesResponse'
+        post:
+            tags:
+                - MallService
+            "summary": "创建收货地址"
+            description: 创建收货地址
+            operationId: MallService_CreateAddress
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateMallAddressRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CreateMallAddressResponse'
+    /openapi/points/mall/addresses/default:
+        get:
+            tags:
+                - MallService
+            "summary": "获取默认地址"
+            description: 获取默认地址
+            operationId: MallService_GetDefaultAddress
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetDefaultMallAddressResponse'
+    /openapi/points/mall/addresses/{id}:
+        put:
+            tags:
+                - MallService
+            "summary": "更新收货地址"
+            description: 更新收货地址
+            operationId: MallService_UpdateAddress
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateMallAddressRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/UpdateMallAddressResponse'
+        delete:
+            tags:
+                - MallService
+            "summary": "删除收货地址"
+            description: 删除收货地址
+            operationId: MallService_DeleteAddress
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DeleteMallAddressResponse'
+    /openapi/points/mall/addresses/{id}/default:
+        put:
+            tags:
+                - MallService
+            "summary": "设置默认地址"
+            description: 设置默认地址
+            operationId: MallService_SetDefaultAddress
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/SetDefaultMallAddressRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SetDefaultMallAddressResponse'
+    /openapi/points/mall/categories:
+        get:
+            tags:
+                - MallService
+            "summary": "获取商品分类列表"
+            description: 获取商品分类列表
+            operationId: MallService_ListCategories
+            parameters:
+                - name: lang
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListMallCategoriesResponse'
+    /openapi/points/mall/orders:
+        get:
+            tags:
+                - MallService
+            "summary": "获取订单列表"
+            description: 获取订单列表
+            operationId: MallService_ListOrders
+            parameters:
+                - name: status
+                  in: query
+                  schema:
+                    type: string
+                - name: page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListMallOrdersResponse'
+        post:
+            tags:
+                - MallService
+            "summary": "创建订单"
+            description: 创建订单
+            operationId: MallService_CreateOrder
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateMallOrderRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CreateMallOrderResponse'
+    /openapi/points/mall/orders/{orderId}:
+        get:
+            tags:
+                - MallService
+            "summary": "获取订单详情"
+            description: 获取订单详情
+            operationId: MallService_GetOrder
+            parameters:
+                - name: orderId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetMallOrderResponse'
+    /openapi/points/mall/orders/{orderId}/confirm:
+        put:
+            tags:
+                - MallService
+            "summary": "确认收货"
+            description: 确认收货
+            operationId: MallService_ConfirmReceipt
+            parameters:
+                - name: orderId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ConfirmReceiptRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ConfirmReceiptResponse'
+    /openapi/points/mall/products:
+        get:
+            tags:
+                - MallService
+            "summary": "获取商品列表"
+            description: 获取商品列表
+            operationId: MallService_ListProducts
+            parameters:
+                - name: categoryId
+                  in: query
+                  schema:
+                    type: string
+                - name: keyword
+                  in: query
+                  schema:
+                    type: string
+                - name: page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: lang
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListMallProductsResponse'
+    /openapi/points/mall/products/{productId}:
+        get:
+            tags:
+                - MallService
+            "summary": "获取商品详情"
+            description: 获取商品详情
+            operationId: MallService_GetProduct
+            parameters:
+                - name: productId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                - name: lang
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetMallProductResponse'
+    /openapi/points/mall/user/info:
+        get:
+            tags:
+                - MallService
+            "summary": "获取用户信息"
+            description: 获取用户信息
+            operationId: MallService_GetUserInfo
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetMallUserInfoResponse'
+    /openapi/points/orders:
+        get:
+            tags:
+                - 订单管理服务
+            "summary": "获取订单列表"
+            description: 获取订单列表
+            operationId: OrderManagement_ListOrderManagement
+            parameters:
+                - name: page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: status
+                  in: query
+                  schema:
+                    enum:
+                        - ORDER_STATUS_UNSPECIFIED
+                        - PENDING
+                        - PAYMENT_PROCESSING
+                        - PAID
+                        - PENDING_SHIPMENT
+                        - SHIPPED
+                        - RECEIVED
+                        - CANCELLED
+                        - PAYMENT_FAILED
+                    type: string
+                    format: enum
+                - name: orderNo
+                  in: query
+                  schema:
+                    type: string
+                - name: userCode
+                  in: query
+                  schema:
+                    type: string
+                - name: startDate
+                  in: query
+                  schema:
+                    type: string
+                - name: endDate
+                  in: query
+                  schema:
+                    type: string
+                - name: goodsType
+                  in: query
+                  schema:
+                    type: string
+                - name: logisticsId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: logisticsNo
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListOrderManagementReply'
+    /openapi/points/orders/{id}:
+        get:
+            tags:
+                - 订单管理服务
+            "summary": "获取订单详情"
+            description: 获取订单详情
+            operationId: OrderManagement_GetOrderManagement
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetOrderManagementReply'
+        put:
+            tags:
+                - 订单管理服务
+            "summary": "更新订单"
+            description: 更新订单
+            operationId: OrderManagement_UpdateOrderManagement
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateOrderManagementRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/UpdateOrderManagementReply'
+        delete:
+            tags:
+                - 订单管理服务
+            "summary": "删除订单"
+            description: 删除订单
+            operationId: OrderManagement_DeleteOrderManagement
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DeleteOrderManagementReply'
+    /openapi/points/orders/{id}/ship:
+        post:
+            tags:
+                - 订单管理服务
+            "summary": "发货"
+            description: 发货
+            operationId: OrderManagement_ShipOrder
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ShipOrderRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ShipOrderReply'
+    /openapi/points/product-categories:
+        get:
+            tags:
+                - 商品分类管理服务
+            "summary": "获取商品分类列表"
+            description: 获取商品分类列表
+            operationId: ProductCategories_ListProductCategories
+            parameters:
+                - name: page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: isShow
+                  in: query
+                  schema:
+                    type: boolean
+                - name: search
+                  in: query
+                  schema:
+                    type: string
+                - name: lang
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListProductCategoriesReply'
+        post:
+            tags:
+                - 商品分类管理服务
+            "summary": "创建商品分类"
+            description: 创建商品分类
+            operationId: ProductCategories_CreateProductCategories
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateProductCategoriesRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CreateProductCategoriesReply'
+    /openapi/points/product-categories/{id}:
+        get:
+            tags:
+                - 商品分类管理服务
+            "summary": "获取商品分类详情"
+            description: 获取商品分类详情
+            operationId: ProductCategories_GetProductCategories
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetProductCategoriesReply'
+        put:
+            tags:
+                - 商品分类管理服务
+            "summary": "更新商品分类"
+            description: 更新商品分类
+            operationId: ProductCategories_UpdateProductCategories
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateProductCategoriesRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/UpdateProductCategoriesReply'
+        delete:
+            tags:
+                - 商品分类管理服务
+            "summary": "删除商品分类"
+            description: 删除商品分类
+            operationId: ProductCategories_DeleteProductCategories
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DeleteProductCategoriesReply'
+    /openapi/points/tenants:
+        get:
+            tags:
+                - 租户管理服务
+            "summary": "获取租户配置列表"
+            description: 获取租户配置列表
+            operationId: TenantManagement_ListTenantConfigs
+            parameters:
+                - name: page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: status
+                  in: query
+                  schema:
+                    type: boolean
+                - name: search
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListTenantConfigsReply'
+        post:
+            tags:
+                - 租户管理服务
+            "summary": "创建租户配置"
+            description: 创建租户配置
+            operationId: TenantManagement_CreateTenantConfig
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateTenantConfigRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CreateTenantConfigReply'
+    /openapi/points/tenants/{tenantCode}:
+        get:
+            tags:
+                - 租户管理服务
+            "summary": "获取租户配置详情"
+            description: 获取租户配置详情
+            operationId: TenantManagement_GetTenantConfig
+            parameters:
+                - name: tenantCode
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetTenantConfigReply'
+        put:
+            tags:
+                - 租户管理服务
+            "summary": "更新租户配置"
+            description: 更新租户配置
+            operationId: TenantManagement_UpdateTenantConfig
+            parameters:
+                - name: tenantCode
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateTenantConfigRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/UpdateTenantConfigReply'
+        delete:
+            tags:
+                - 租户管理服务
+            "summary": "删除租户配置"
+            description: 删除租户配置
+            operationId: TenantManagement_DeleteTenantConfig
+            parameters:
+                - name: tenantCode
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DeleteTenantConfigReply'
+    /openapi/points/tenants/{tenantCode}/reset-secret:
+        post:
+            tags:
+                - 租户管理服务
+            "summary": "重置API密钥"
+            description: 重置API密钥
+            operationId: TenantManagement_ResetApiSecret
+            parameters:
+                - name: tenantCode
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ResetApiSecretReply'
+    /openapi/points/webhook/confirm:
+        post:
+            tags:
+                - Webhook 服务
+            "summary": "商户确认 Webhook 处理结果"
+            description: 商户确认 Webhook 处理结果
+            operationId: WebhookService_ConfirmWebhook
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ConfirmWebhookRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ConfirmWebhookReply'
+    /openapi/points/webhook/events:
+        get:
+            tags:
+                - Webhook 服务
+            "summary": "查询 Webhook 事件列表"
+            description: 查询 Webhook 事件列表
+            operationId: WebhookService_ListWebhookEvents
+            parameters:
+                - name: page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: status
+                  in: query
+                  schema:
+                    type: string
+                - name: eventType
+                  in: query
+                  schema:
+                    type: string
+                - name: orderId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: orderNo
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListWebhookEventsReply'
+    /openapi/points/webhook/events/{eventId}:
+        get:
+            tags:
+                - Webhook 服务
+            "summary": "查询 Webhook 事件详情"
+            description: 查询 Webhook 事件详情
+            operationId: WebhookService_GetWebhookEvent
+            parameters:
+                - name: eventId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetWebhookEventReply'
+    /openapi/points/webhook/events/{eventId}/retry:
+        post:
+            tags:
+                - Webhook 服务
+            "summary": "手动重试 Webhook"
+            description: 手动重试 Webhook
+            operationId: WebhookService_RetryWebhook
+            parameters:
+                - name: eventId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RetryWebhookReply'
+components:
+    schemas:
+        BatchUploadCardsReply:
+            type: object
+            properties:
+                successCount:
+                    type: integer
+                    format: int32
+                failedCount:
+                    type: integer
+                    format: int32
+                failedReasons:
+                    type: array
+                    items:
+                        type: string
+                message:
+                    type: string
+            description: 批量上传卡密响应
+        BatchUploadCardsRequest:
+            type: object
+            properties:
+                goodsId:
+                    type: integer
+                    format: uint32
+                cardAuthType:
+                    enum:
+                        - CARD_AUTH_TYPE_UNSPECIFIED
+                        - PASSWORD_ONLY
+                        - CARD_AND_PASSWORD
+                    type: string
+                    format: enum
+                cards:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/CardInput'
+            description: 批量上传卡密请求
+        CardInput:
+            type: object
+            properties:
+                cardNo:
+                    type: string
+                cardPassword:
+                    type: string
+            description: 卡密输入
+        ConfirmReceiptRequest:
+            type: object
+            properties:
+                orderId:
+                    type: string
+            description: 确认收货请求
+        ConfirmReceiptResponse:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                message:
+                    type: string
+            description: 确认收货响应
+        ConfirmWebhookReply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                message:
+                    type: string
+            description: 商户确认 Webhook 响应
+        ConfirmWebhookRequest:
+            type: object
+            properties:
+                eventId:
+                    type: string
+                success:
+                    type: boolean
+                transactionId:
+                    type: string
+                remainingPoints:
+                    type: integer
+                    format: int32
+                errorCode:
+                    type: string
+                errorMessage:
+                    type: string
+                signature:
+                    type: string
+                timestamp:
+                    type: string
+            description: 商户确认 Webhook 请求
+        CreateGoodsManagementReply:
+            type: object
+            properties:
+                goods:
+                    $ref: '#/components/schemas/GoodsInfo'
+                message:
+                    type: string
+            description: 创建商品响应
+        CreateGoodsManagementRequest:
+            type: object
+            properties:
+                categoryId:
+                    type: integer
+                    format: uint32
+                points:
+                    type: number
+                    format: float
+                sort:
+                    type: integer
+                    format: int32
+                type:
+                    enum:
+                        - GOODS_TYPE_UNSPECIFIED
+                        - PHYSICAL
+                        - VIRTUAL
+                    type: string
+                    format: enum
+                stock:
+                    type: integer
+                    format: int32
+                singleMemberLimit:
+                    type: integer
+                    format: int32
+                status:
+                    enum:
+                        - GOODS_STATUS_UNSPECIFIED
+                        - ON_SALE
+                        - OFF_SALE
+                    type: string
+                    format: enum
+                languages:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/GoodsLanguageInfo'
+            description: 创建商品请求
+        CreateLogisticsCompanyRequest:
+            type: object
+            properties:
+                name:
+                    type: string
+                status:
+                    type: boolean
+            description: 创建物流公司请求
+        CreateLogisticsCompanyResponse:
+            type: object
+            properties:
+                logisticsCompany:
+                    $ref: '#/components/schemas/LogisticsCompanyInfo'
+                message:
+                    type: string
+            description: 创建物流公司响应
+        CreateMallAddressRequest:
+            type: object
+            properties:
+                name:
+                    type: string
+                phone:
+                    type: string
+                province:
+                    type: string
+                city:
+                    type: string
+                district:
+                    type: string
+                address:
+                    type: string
+                isDefault:
+                    type: boolean
+            description: 创建地址请求
+        CreateMallAddressResponse:
+            type: object
+            properties:
+                address:
+                    $ref: '#/components/schemas/MallAddressInfo'
+            description: 创建地址响应
+        CreateMallOrderRequest:
+            type: object
+            properties:
+                productId:
+                    type: string
+                addressId:
+                    type: string
+                remark:
+                    type: string
+            description: 创建订单请求
+        CreateMallOrderResponse:
+            type: object
+            properties:
+                orderId:
+                    type: string
+                orderNo:
+                    type: string
+                status:
+                    enum:
+                        - MALL_ORDER_STATUS_UNSPECIFIED
+                        - MALL_ORDER_PENDING
+                        - MALL_ORDER_PROCESSING
+                        - MALL_ORDER_PAID
+                        - MALL_ORDER_PENDING_SHIPMENT
+                        - MALL_ORDER_SHIPPED
+                        - MALL_ORDER_COMPLETED
+                        - MALL_ORDER_CANCELLED
+                        - MALL_ORDER_FAILED
+                    type: string
+                    format: enum
+                points:
+                    type: string
+                createdAt:
+                    type: string
+                    format: date-time
+                cardInfo:
+                    $ref: '#/components/schemas/MallCardInfo'
+            description: 创建订单响应
+        CreateProductCategoriesReply:
+            type: object
+            properties:
+                category:
+                    $ref: '#/components/schemas/GoodsCategoryInfo'
+                message:
+                    type: string
+            description: 创建商品分类响应
+        CreateProductCategoriesRequest:
+            type: object
+            properties:
+                i18n:
+                    type: object
+                sort:
+                    type: integer
+                    format: int32
+                isShow:
+                    type: boolean
+            description: 创建商品分类请求
+        CreateTenantConfigReply:
+            type: object
+            properties:
+                tenantConfig:
+                    $ref: '#/components/schemas/TenantConfigInfo'
+                apiSecret:
+                    type: string
+                message:
+                    type: string
+            description: 创建租户配置响应
+        CreateTenantConfigRequest:
+            type: object
+            properties:
+                tenantName:
+                    type: string
+                apiSecret:
+                    type: string
+                h5Domain:
+                    type: string
+                pointsMode:
+                    enum:
+                        - POINTS_MODE_UNSPECIFIED
+                        - POINTS_MODE_WEBHOOK
+                        - POINTS_MODE_LOCAL
+                    type: string
+                    format: enum
+                webhookUrl:
+                    type: string
+                webhookTimeout:
+                    type: integer
+                    format: int32
+                webhookMaxRetry:
+                    type: integer
+                    format: int32
+                webhookConfirmTimeout:
+                    type: integer
+                    format: int32
+                status:
+                    type: boolean
+            description: 创建租户配置请求
+        DeleteCardReply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                message:
+                    type: string
+            description: 删除卡密响应
+        DeleteGoodsManagementReply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                message:
+                    type: string
+            description: 删除商品响应
+        DeleteLogisticsCompanyResponse:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                message:
+                    type: string
+            description: 删除物流公司响应
+        DeleteMallAddressResponse:
+            type: object
+            properties:
+                success:
+                    type: boolean
+            description: 删除地址响应
+        DeleteOrderManagementReply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                message:
+                    type: string
+            description: 删除订单响应
+        DeleteProductCategoriesReply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                message:
+                    type: string
+            description: 删除商品分类响应
+        DeleteTenantConfigReply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                message:
+                    type: string
+            description: 删除租户配置响应
+        GenerateTicketRequest:
+            type: object
+            properties:
+                userCode:
+                    type: string
+                userName:
+                    type: string
+                userPoints:
+                    type: integer
+                    format: int32
+                extraData:
+                    type: object
+            description: 生成票据请求
+        GenerateTicketResponse:
+            type: object
+            properties:
+                ticketToken:
+                    type: string
+                h5Url:
+                    type: string
+                expiresIn:
+                    type: integer
+                    format: int32
+                createdAt:
+                    type: string
+                    format: date-time
+                message:
+                    type: string
+            description: 生成票据响应
+        GetDefaultMallAddressResponse:
+            type: object
+            properties:
+                address:
+                    $ref: '#/components/schemas/MallAddressInfo'
+            description: 获取默认地址响应
+        GetGoodsManagementReply:
+            type: object
+            properties:
+                goods:
+                    $ref: '#/components/schemas/GoodsInfo'
+            description: 获取商品响应
+        GetLogisticsCompanyResponse:
+            type: object
+            properties:
+                logisticsCompany:
+                    $ref: '#/components/schemas/LogisticsCompanyInfo'
+            description: 获取物流公司响应
+        GetMallOrderResponse:
+            type: object
+            properties:
+                order:
+                    $ref: '#/components/schemas/MallOrderDetail'
+            description: 获取订单详情响应
+        GetMallProductResponse:
+            type: object
+            properties:
+                product:
+                    $ref: '#/components/schemas/MallProductDetail'
+            description: 获取商品详情响应
+        GetMallUserInfoResponse:
+            type: object
+            properties:
+                userCode:
+                    type: string
+                points:
+                    type: string
+                orderCounts:
+                    $ref: '#/components/schemas/MallOrderCounts'
+                merchant:
+                    $ref: '#/components/schemas/MallMerchantInfo'
+            description: 获取用户信息响应
+        GetOrderManagementReply:
+            type: object
+            properties:
+                order:
+                    $ref: '#/components/schemas/OrderInfo'
+            description: 获取订单响应
+        GetProductCategoriesReply:
+            type: object
+            properties:
+                category:
+                    $ref: '#/components/schemas/GoodsCategoryInfo'
+            description: 获取商品分类响应
+        GetTenantConfigReply:
+            type: object
+            properties:
+                tenantConfig:
+                    $ref: '#/components/schemas/TenantConfigInfo'
+            description: 获取租户配置响应
+        GetWebhookEventReply:
+            type: object
+            properties:
+                event:
+                    $ref: '#/components/schemas/WebhookEventInfo'
+            description: 查询 Webhook 事件响应
+        GoodsCardInfo:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                goodsId:
+                    type: integer
+                    format: uint32
+                cardNo:
+                    type: string
+                cardPassword:
+                    type: string
+                cardCode:
+                    type: string
+                cardAuthType:
+                    enum:
+                        - CARD_AUTH_TYPE_UNSPECIFIED
+                        - PASSWORD_ONLY
+                        - CARD_AND_PASSWORD
+                    type: string
+                    format: enum
+                status:
+                    enum:
+                        - CARD_STATUS_UNSPECIFIED
+                        - AVAILABLE
+                        - SOLD
+                        - INVALID
+                    type: string
+                    format: enum
+                orderId:
+                    type: integer
+                    format: uint32
+                userCode:
+                    type: string
+                usedAt:
+                    type: string
+                    format: date-time
+                creatorCode:
+                    type: string
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+            description: 虚拟卡卡密信息
+        GoodsCategoryInfo:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                i18n:
+                    type: object
+                sort:
+                    type: integer
+                    format: int32
+                isShow:
+                    type: boolean
+                goodsCount:
+                    type: integer
+                    format: int32
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+            description: 商品分类信息
+        GoodsInfo:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                categoryId:
+                    type: integer
+                    format: uint32
+                categoryName:
+                    type: string
+                points:
+                    type: number
+                    format: float
+                sort:
+                    type: integer
+                    format: int32
+                type:
+                    enum:
+                        - GOODS_TYPE_UNSPECIFIED
+                        - PHYSICAL
+                        - VIRTUAL
+                    type: string
+                    format: enum
+                stock:
+                    type: integer
+                    format: int32
+                singleMemberLimit:
+                    type: integer
+                    format: int32
+                status:
+                    enum:
+                        - GOODS_STATUS_UNSPECIFIED
+                        - ON_SALE
+                        - OFF_SALE
+                    type: string
+                    format: enum
+                operatorCode:
+                    type: string
+                languages:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/GoodsLanguageInfo'
+                cardCount:
+                    type: integer
+                    format: int32
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+            description: 商品信息
+        GoodsLanguageInfo:
+            type: object
+            properties:
+                langType:
+                    type: string
+                name:
+                    type: string
+                images:
+                    type: array
+                    items:
+                        type: string
+                richText:
+                    type: string
+            description: 商品多语言信息
+        ImportCardsFromExcelReply:
+            type: object
+            properties:
+                successCount:
+                    type: integer
+                    format: int32
+                failedCount:
+                    type: integer
+                    format: int32
+                failedReasons:
+                    type: array
+                    items:
+                        type: string
+                message:
+                    type: string
+            description: Excel 批量导入卡密响应
+        ImportCardsFromExcelRequest:
+            type: object
+            properties:
+                goodsId:
+                    type: integer
+                    format: uint32
+                cardAuthType:
+                    enum:
+                        - CARD_AUTH_TYPE_UNSPECIFIED
+                        - PASSWORD_ONLY
+                        - CARD_AND_PASSWORD
+                    type: string
+                    format: enum
+                fileContent:
+                    type: string
+                    format: bytes
+            description: Excel 批量导入卡密请求
+        ListCardsReply:
+            type: object
+            properties:
+                cards:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/GoodsCardInfo'
+                total:
+                    type: integer
+                    format: int32
+                page:
+                    type: integer
+                    format: int32
+                pageSize:
+                    type: integer
+                    format: int32
+            description: 获取卡密列表响应
+        ListGoodsManagementReply:
+            type: object
+            properties:
+                goodsList:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/GoodsInfo'
+                total:
+                    type: integer
+                    format: int32
+                page:
+                    type: integer
+                    format: int32
+                pageSize:
+                    type: integer
+                    format: int32
+            description: 获取商品列表响应
+        ListLogisticsCompaniesResponse:
+            type: object
+            properties:
+                logisticsCompanies:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/LogisticsCompanyInfo'
+                total:
+                    type: integer
+                    format: int32
+                page:
+                    type: integer
+                    format: int32
+                pageSize:
+                    type: integer
+                    format: int32
+            description: 获取物流公司列表响应
+        ListMallAddressesResponse:
+            type: object
+            properties:
+                addresses:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/MallAddressInfo'
+            description: 获取地址列表响应
+        ListMallCategoriesResponse:
+            type: object
+            properties:
+                categories:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/MallCategoryInfo'
+            description: 获取分类列表响应
+        ListMallOrdersResponse:
+            type: object
+            properties:
+                orders:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/MallOrderItem'
+                total:
+                    type: integer
+                    format: int32
+                page:
+                    type: integer
+                    format: int32
+                pageSize:
+                    type: integer
+                    format: int32
+            description: 获取订单列表响应
+        ListMallProductsResponse:
+            type: object
+            properties:
+                list:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/MallProductItem'
+                total:
+                    type: integer
+                    format: int32
+                page:
+                    type: integer
+                    format: int32
+                pageSize:
+                    type: integer
+                    format: int32
+            description: 获取商品列表响应
+        ListOrderManagementReply:
+            type: object
+            properties:
+                orders:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/OrderInfo'
+                total:
+                    type: integer
+                    format: int32
+                page:
+                    type: integer
+                    format: int32
+                pageSize:
+                    type: integer
+                    format: int32
+            description: 获取订单列表响应
+        ListProductCategoriesReply:
+            type: object
+            properties:
+                categories:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/GoodsCategoryInfo'
+                total:
+                    type: integer
+                    format: int32
+                page:
+                    type: integer
+                    format: int32
+                pageSize:
+                    type: integer
+                    format: int32
+            description: 获取商品分类列表响应
+        ListTenantConfigsReply:
+            type: object
+            properties:
+                tenantConfigs:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/TenantConfigInfo'
+                total:
+                    type: integer
+                    format: int32
+                page:
+                    type: integer
+                    format: int32
+                pageSize:
+                    type: integer
+                    format: int32
+            description: 获取租户配置列表响应
+        ListWebhookEventsReply:
+            type: object
+            properties:
+                events:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/WebhookEventInfo'
+                total:
+                    type: integer
+                    format: int32
+                page:
+                    type: integer
+                    format: int32
+                pageSize:
+                    type: integer
+                    format: int32
+            description: 查询 Webhook 事件列表响应
+        LogisticsCompanyInfo:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                name:
+                    type: string
+                status:
+                    type: boolean
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+            description: 物流公司信息
+        LogisticsInfo:
+            type: object
+            properties:
+                logisticsId:
+                    type: integer
+                    format: uint32
+                logisticsName:
+                    type: string
+                logisticsNo:
+                    type: string
+            description: 物流信息
+        MallAddressInfo:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                phone:
+                    type: string
+                province:
+                    type: string
+                city:
+                    type: string
+                district:
+                    type: string
+                address:
+                    type: string
+                isDefault:
+                    type: boolean
+            description: 收货地址信息
+        MallCardInfo:
+            type: object
+            properties:
+                cardNo:
+                    type: string
+                cardSecret:
+                    type: string
+            description: 卡密信息（虚拟商品）
+        MallCategoryInfo:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+            description: 分类信息
+        MallMerchantInfo:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                logo:
+                    type: string
+            description: 商户信息
+        MallOrderCounts:
+            type: object
+            properties:
+                all:
+                    type: integer
+                    format: int32
+                pendingShipment:
+                    type: integer
+                    format: int32
+                pendingReceipt:
+                    type: integer
+                    format: int32
+            description: 订单统计
+        MallOrderDetail:
+            type: object
+            properties:
+                orderId:
+                    type: string
+                orderNo:
+                    type: string
+                status:
+                    enum:
+                        - MALL_ORDER_STATUS_UNSPECIFIED
+                        - MALL_ORDER_PENDING
+                        - MALL_ORDER_PROCESSING
+                        - MALL_ORDER_PAID
+                        - MALL_ORDER_PENDING_SHIPMENT
+                        - MALL_ORDER_SHIPPED
+                        - MALL_ORDER_COMPLETED
+                        - MALL_ORDER_CANCELLED
+                        - MALL_ORDER_FAILED
+                    type: string
+                    format: enum
+                points:
+                    type: string
+                product:
+                    $ref: '#/components/schemas/MallOrderProductInfo'
+                address:
+                    $ref: '#/components/schemas/MallAddressInfo'
+                logistics:
+                    $ref: '#/components/schemas/MallOrderLogistics'
+                cardInfo:
+                    $ref: '#/components/schemas/MallCardInfo'
+                createdAt:
+                    type: string
+                    format: date-time
+            description: 订单详情
+        MallOrderItem:
+            type: object
+            properties:
+                orderId:
+                    type: string
+                orderNo:
+                    type: string
+                status:
+                    enum:
+                        - MALL_ORDER_STATUS_UNSPECIFIED
+                        - MALL_ORDER_PENDING
+                        - MALL_ORDER_PROCESSING
+                        - MALL_ORDER_PAID
+                        - MALL_ORDER_PENDING_SHIPMENT
+                        - MALL_ORDER_SHIPPED
+                        - MALL_ORDER_COMPLETED
+                        - MALL_ORDER_CANCELLED
+                        - MALL_ORDER_FAILED
+                    type: string
+                    format: enum
+                points:
+                    type: string
+                product:
+                    $ref: '#/components/schemas/MallOrderProductInfo'
+                createdAt:
+                    type: string
+                    format: date-time
+            description: 订单列表项
+        MallOrderLogistics:
+            type: object
+            properties:
+                company:
+                    type: string
+                trackingNo:
+                    type: string
+            description: 订单物流信息
+        MallOrderProductInfo:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                image:
+                    type: string
+                quantity:
+                    type: integer
+                    format: int32
+            description: 订单商品信息
+        MallProductDetail:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                images:
+                    type: array
+                    items:
+                        type: string
+                points:
+                    type: string
+                type:
+                    type: string
+                stock:
+                    type: integer
+                    format: int32
+                sold:
+                    type: integer
+                    format: int32
+                tag:
+                    type: string
+                subtitle:
+                    type: string
+                limitPerUser:
+                    type: integer
+                    format: int32
+                detailHtml:
+                    type: string
+            description: 商品详情
+        MallProductItem:
+            type: object
+            properties:
+                id:
+                    type: string
+                points:
+                    type: string
+                type:
+                    type: string
+                stock:
+                    type: integer
+                    format: int32
+                sold:
+                    type: integer
+                    format: int32
+                tag:
+                    type: string
+                badge:
+                    type: string
+                subtitle:
+                    type: string
+                languages:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/MallProductLanguageInfo'
+            description: 商品列表项
+        MallProductLanguageInfo:
+            type: object
+            properties:
+                langType:
+                    type: string
+                name:
+                    type: string
+                images:
+                    type: array
+                    items:
+                        type: string
+            description: 商品多语言信息
+        OrderGoodsInfo:
+            type: object
+            properties:
+                goodsId:
+                    type: integer
+                    format: uint32
+                goodsName:
+                    type: string
+                goodsImage:
+                    type: string
+            description: 商品信息
+        OrderInfo:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                orderNo:
+                    type: string
+                userCode:
+                    type: string
+                userName:
+                    type: string
+                goods:
+                    $ref: '#/components/schemas/OrderGoodsInfo'
+                points:
+                    type: integer
+                    format: int32
+                receiver:
+                    $ref: '#/components/schemas/ReceiverInfo'
+                logistics:
+                    $ref: '#/components/schemas/LogisticsInfo'
+                status:
+                    enum:
+                        - ORDER_STATUS_UNSPECIFIED
+                        - PENDING
+                        - PAYMENT_PROCESSING
+                        - PAID
+                        - PENDING_SHIPMENT
+                        - SHIPPED
+                        - RECEIVED
+                        - CANCELLED
+                        - PAYMENT_FAILED
+                    type: string
+                    format: enum
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+            description: 订单信息
+        ReceiverInfo:
+            type: object
+            properties:
+                addressId:
+                    type: integer
+                    format: uint32
+                name:
+                    type: string
+                phone:
+                    type: string
+                province:
+                    type: string
+                city:
+                    type: string
+                district:
+                    type: string
+                address:
+                    type: string
+            description: 收货人信息
+        RefreshSessionResponse:
+            type: object
+            properties:
+                sessionToken:
+                    type: string
+                expiresIn:
+                    type: integer
+                    format: int32
+                message:
+                    type: string
+            description: 刷新会话响应
+        ResetApiSecretReply:
+            type: object
+            properties:
+                apiSecret:
+                    type: string
+                message:
+                    type: string
+            description: 重置API密钥响应
+        RetryWebhookReply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                message:
+                    type: string
+            description: 手动重试 Webhook 响应
+        SetDefaultMallAddressRequest:
+            type: object
+            properties:
+                id:
+                    type: string
+            description: 设置默认地址请求
+        SetDefaultMallAddressResponse:
+            type: object
+            properties:
+                address:
+                    $ref: '#/components/schemas/MallAddressInfo'
+                message:
+                    type: string
+            description: 设置默认地址响应
+        ShipOrderReply:
+            type: object
+            properties:
+                order:
+                    $ref: '#/components/schemas/OrderInfo'
+                message:
+                    type: string
+            description: 发货响应
+        ShipOrderRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                logisticsId:
+                    type: integer
+                    format: uint32
+                logisticsNo:
+                    type: string
+            description: 发货请求
+        TenantConfigInfo:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                tenantCode:
+                    type: string
+                tenantName:
+                    type: string
+                h5Domain:
+                    type: string
+                pointsMode:
+                    enum:
+                        - POINTS_MODE_UNSPECIFIED
+                        - POINTS_MODE_WEBHOOK
+                        - POINTS_MODE_LOCAL
+                    type: string
+                    format: enum
+                webhookUrl:
+                    type: string
+                webhookTimeout:
+                    type: integer
+                    format: int32
+                webhookMaxRetry:
+                    type: integer
+                    format: int32
+                webhookConfirmTimeout:
+                    type: integer
+                    format: int32
+                status:
+                    type: boolean
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+            description: 租户配置信息
+        UpdateCardStatusReply:
+            type: object
+            properties:
+                card:
+                    $ref: '#/components/schemas/GoodsCardInfo'
+                message:
+                    type: string
+            description: 更新卡密状态响应
+        UpdateCardStatusRequest:
+            type: object
+            properties:
+                cardId:
+                    type: integer
+                    format: uint32
+                status:
+                    enum:
+                        - CARD_STATUS_UNSPECIFIED
+                        - AVAILABLE
+                        - SOLD
+                        - INVALID
+                    type: string
+                    format: enum
+            description: 更新卡密状态请求
+        UpdateGoodsManagementReply:
+            type: object
+            properties:
+                goods:
+                    $ref: '#/components/schemas/GoodsInfo'
+                message:
+                    type: string
+            description: 更新商品响应
+        UpdateGoodsManagementRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                categoryId:
+                    type: integer
+                    format: uint32
+                points:
+                    type: number
+                    format: float
+                sort:
+                    type: integer
+                    format: int32
+                stock:
+                    type: integer
+                    format: int32
+                singleMemberLimit:
+                    type: integer
+                    format: int32
+                status:
+                    enum:
+                        - GOODS_STATUS_UNSPECIFIED
+                        - ON_SALE
+                        - OFF_SALE
+                    type: string
+                    format: enum
+                languages:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/GoodsLanguageInfo'
+                updateMask:
+                    type: string
+                    format: field-mask
+            description: 更新商品请求
+        UpdateLogisticsCompanyRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                name:
+                    type: string
+                status:
+                    type: boolean
+                updateMask:
+                    type: string
+                    format: field-mask
+            description: 更新物流公司请求
+        UpdateLogisticsCompanyResponse:
+            type: object
+            properties:
+                logisticsCompany:
+                    $ref: '#/components/schemas/LogisticsCompanyInfo'
+                message:
+                    type: string
+            description: 更新物流公司响应
+        UpdateMallAddressRequest:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                phone:
+                    type: string
+                province:
+                    type: string
+                city:
+                    type: string
+                district:
+                    type: string
+                address:
+                    type: string
+                isDefault:
+                    type: boolean
+            description: 更新地址请求
+        UpdateMallAddressResponse:
+            type: object
+            properties:
+                address:
+                    $ref: '#/components/schemas/MallAddressInfo'
+            description: 更新地址响应
+        UpdateOrderManagementReply:
+            type: object
+            properties:
+                order:
+                    $ref: '#/components/schemas/OrderInfo'
+                message:
+                    type: string
+            description: 更新订单响应
+        UpdateOrderManagementRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                status:
+                    enum:
+                        - ORDER_STATUS_UNSPECIFIED
+                        - PENDING
+                        - PAYMENT_PROCESSING
+                        - PAID
+                        - PENDING_SHIPMENT
+                        - SHIPPED
+                        - RECEIVED
+                        - CANCELLED
+                        - PAYMENT_FAILED
+                    type: string
+                    format: enum
+                logisticsId:
+                    type: integer
+                    format: uint32
+                logisticsNo:
+                    type: string
+                updateMask:
+                    type: string
+                    format: field-mask
+            description: 更新订单请求
+        UpdateProductCategoriesReply:
+            type: object
+            properties:
+                category:
+                    $ref: '#/components/schemas/GoodsCategoryInfo'
+                message:
+                    type: string
+            description: 更新商品分类响应
+        UpdateProductCategoriesRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                i18n:
+                    type: object
+                sort:
+                    type: integer
+                    format: int32
+                isShow:
+                    type: boolean
+                updateMask:
+                    type: string
+                    format: field-mask
+            description: 更新商品分类请求
+        UpdateTenantConfigReply:
+            type: object
+            properties:
+                tenantConfig:
+                    $ref: '#/components/schemas/TenantConfigInfo'
+                apiSecret:
+                    type: string
+                message:
+                    type: string
+            description: 更新租户配置响应
+        UpdateTenantConfigRequest:
+            type: object
+            properties:
+                tenantCode:
+                    type: string
+                tenantName:
+                    type: string
+                apiSecret:
+                    type: string
+                h5Domain:
+                    type: string
+                pointsMode:
+                    type: string
+                webhookUrl:
+                    type: string
+                webhookTimeout:
+                    type: integer
+                    format: int32
+                webhookMaxRetry:
+                    type: integer
+                    format: int32
+                webhookConfirmTimeout:
+                    type: integer
+                    format: int32
+                status:
+                    type: boolean
+                updateMask:
+                    type: string
+                    format: field-mask
+            description: 更新租户配置请求
+        VerifyTicketResponse:
+            type: object
+            properties:
+                userCode:
+                    type: string
+                userName:
+                    type: string
+                userPoints:
+                    type: integer
+                    format: int32
+                tenantCode:
+                    type: string
+                sessionToken:
+                    type: string
+                extraData:
+                    type: object
+                message:
+                    type: string
+            description: 验证票据响应
+        WebhookEventInfo:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: uint32
+                eventId:
+                    type: string
+                tenantCode:
+                    type: string
+                eventType:
+                    type: string
+                status:
+                    type: string
+                webhookUrl:
+                    type: string
+                retryCount:
+                    type: integer
+                    format: int32
+                maxRetry:
+                    type: integer
+                    format: int32
+                lastError:
+                    type: string
+                orderId:
+                    type: integer
+                    format: uint32
+                orderNo:
+                    type: string
+                points:
+                    type: integer
+                    format: int32
+                deliveredAt:
+                    type: string
+                    format: date-time
+                confirmedAt:
+                    type: string
+                    format: date-time
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+            description: Webhook 事件信息
+    securitySchemes:
+        hmacAuth:
+            type: apiKey
+            in: header
+            name: X-API-Key
+            description: HMAC-SHA256 签名认证。需要同时提供 X-Timestamp 和 X-Signature 请求头。详见认证文档。
+tags:
+    - name: 免登票据认证服务
+      description: 免登票据认证服务
+    - name: 商品管理服务
+      description: 商品管理服务
+    - name: 物流管理服务
+      description: 物流管理服务
+    - name: MallService
+    - name: 订单管理服务
+      description: 订单管理服务
+    - name: 商品分类管理服务
+      description: 商品分类管理服务
+    - name: 租户管理服务
+      description: 租户管理服务
+    - name: Webhook 服务
+      description: Webhook 服务
