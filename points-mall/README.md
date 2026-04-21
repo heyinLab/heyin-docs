@@ -14,7 +14,6 @@
 | [认证机制](../common/authentication.md)      | HMAC-SHA256 签名算法详解 |
 | [SDK 示例](../common/sdk-examples.md)      | Python、Java、Go、JavaScript、cURL 示例代码 |
 | [错误码参考](../common/error-codes.md)        | 完整错误码列表及解决方案 |
-| [Webhook 指南](../common/webhook-guide.md) | 异步通知对接说明 |
 | [OpenAPI 规范](../openapi/mall.yaml)       | Swagger/OpenAPI 3.0 规范文件 |
 
 ---
