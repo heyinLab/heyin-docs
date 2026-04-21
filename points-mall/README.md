@@ -303,6 +303,7 @@ X-Webhook-Signature-Algorithm: HMAC-SHA256
   "event_id": "459f4306-0c0d-42b8-a753-8b42c2199dff",
   "event_type": "points_deduct",
   "tenant_code": "AMGvfOgFmaWqRYDr4KRYl",
+  "mall_code": "xxxxxxxxxx",
   "timestamp": 1776136557,
   "data": {
     "deduct_points": 100,
