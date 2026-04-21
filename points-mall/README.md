@@ -340,8 +340,6 @@ X-Webhook-Signature-Algorithm: HMAC-SHA256
 
 **URL 协议处理：** `webhookUrl` 无协议前缀时，系统自动先尝试 HTTPS，失败后 fallback 到 HTTP。
 
-详见 [Webhook 指南](../common/webhook-guide.md)。
-
 ---
 
 ## 通用规范
