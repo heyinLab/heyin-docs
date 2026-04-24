@@ -637,10 +637,6 @@ paths:
                   required: true
                   schema:
                     type: string
-                - name: lang
-                  in: query
-                  schema:
-                    type: string
             responses:
                 "200":
                     description: OK
@@ -2206,6 +2202,20 @@ components:
                 name:
                     type: string
             description: 分类信息
+        MallGoodsLanguage:
+            type: object
+            properties:
+                langType:
+                    type: string
+                name:
+                    type: string
+                images:
+                    type: array
+                    items:
+                        type: string
+                richText:
+                    type: string
+            description: 商品多语言
         MallManagementInfo:
             type: object
             properties:
@@ -2333,6 +2343,10 @@ components:
                 quantity:
                     type: integer
                     format: int32
+                languages:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/MallGoodsLanguage'
             description: 订单商品信息
         MallProductDetail:
             type: object
