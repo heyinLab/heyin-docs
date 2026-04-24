@@ -449,7 +449,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/DeleteLogisticsCompanyResponse'
-    /points/h5/mall/addresses:
+    /points/h5/addresses:
         get:
             tags:
                 - MallService
@@ -480,7 +480,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/CreateMallAddressResponse'
-    /points/h5/mall/addresses/default:
+    /points/h5/addresses/default:
         get:
             tags:
                 - MallService
@@ -493,7 +493,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/GetDefaultMallAddressResponse'
-    /points/h5/mall/addresses/{id}:
+    /points/h5/addresses/{id}:
         put:
             tags:
                 - MallService
@@ -536,7 +536,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/DeleteMallAddressResponse'
-    /points/h5/mall/addresses/{id}/default:
+    /points/h5/addresses/{id}/default:
         put:
             tags:
                 - MallService
@@ -561,7 +561,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/SetDefaultMallAddressResponse'
-    /points/h5/mall/categories:
+    /points/h5/categories:
         get:
             tags:
                 - MallService
@@ -579,7 +579,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ListMallCategoriesResponse'
-    /points/h5/mall/orders:
+    /points/h5/orders:
         get:
             tags:
                 - MallService
@@ -625,7 +625,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/CreateMallOrderResponse'
-    /points/h5/mall/orders/{orderId}:
+    /points/h5/orders/{orderId}:
         get:
             tags:
                 - MallService
@@ -637,6 +637,10 @@ paths:
                   required: true
                   schema:
                     type: string
+                - name: lang
+                  in: query
+                  schema:
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -644,7 +648,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/GetMallOrderResponse'
-    /points/h5/mall/orders/{orderId}/confirm:
+    /points/h5/orders/{orderId}/confirm:
         put:
             tags:
                 - MallService
@@ -669,7 +673,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ConfirmReceiptResponse'
-    /points/h5/mall/products:
+    /points/h5/products:
         get:
             tags:
                 - MallService
@@ -705,7 +709,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ListMallProductsResponse'
-    /points/h5/mall/products/{productId}:
+    /points/h5/products/{productId}:
         get:
             tags:
                 - MallService
@@ -728,7 +732,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/GetMallProductResponse'
-    /points/h5/mall/user/info:
+    /points/h5/user/info:
         get:
             tags:
                 - MallService
@@ -989,9 +993,7 @@ paths:
                   schema:
                     enum:
                         - ORDER_STATUS_UNSPECIFIED
-                        - PENDING
                         - PAYMENT_PROCESSING
-                        - PAID
                         - PENDING_SHIPMENT
                         - SHIPPED
                         - RECEIVED
@@ -1553,15 +1555,13 @@ components:
                     type: string
                 status:
                     enum:
-                        - MALL_ORDER_STATUS_UNSPECIFIED
-                        - MALL_ORDER_PENDING
-                        - MALL_ORDER_PROCESSING
-                        - MALL_ORDER_PAID
-                        - MALL_ORDER_PENDING_SHIPMENT
-                        - MALL_ORDER_SHIPPED
-                        - MALL_ORDER_COMPLETED
-                        - MALL_ORDER_CANCELLED
-                        - MALL_ORDER_FAILED
+                        - ORDER_STATUS_UNSPECIFIED
+                        - PAYMENT_PROCESSING
+                        - PENDING_SHIPMENT
+                        - SHIPPED
+                        - RECEIVED
+                        - CANCELLED
+                        - PAYMENT_FAILED
                     type: string
                     format: enum
                 points:
@@ -2262,15 +2262,13 @@ components:
                     type: string
                 status:
                     enum:
-                        - MALL_ORDER_STATUS_UNSPECIFIED
-                        - MALL_ORDER_PENDING
-                        - MALL_ORDER_PROCESSING
-                        - MALL_ORDER_PAID
-                        - MALL_ORDER_PENDING_SHIPMENT
-                        - MALL_ORDER_SHIPPED
-                        - MALL_ORDER_COMPLETED
-                        - MALL_ORDER_CANCELLED
-                        - MALL_ORDER_FAILED
+                        - ORDER_STATUS_UNSPECIFIED
+                        - PAYMENT_PROCESSING
+                        - PENDING_SHIPMENT
+                        - SHIPPED
+                        - RECEIVED
+                        - CANCELLED
+                        - PAYMENT_FAILED
                     type: string
                     format: enum
                 points:
@@ -2286,6 +2284,8 @@ components:
                 createdAt:
                     type: string
                     format: date-time
+                remark:
+                    type: string
             description: 订单详情
         MallOrderItem:
             type: object
@@ -2296,15 +2296,13 @@ components:
                     type: string
                 status:
                     enum:
-                        - MALL_ORDER_STATUS_UNSPECIFIED
-                        - MALL_ORDER_PENDING
-                        - MALL_ORDER_PROCESSING
-                        - MALL_ORDER_PAID
-                        - MALL_ORDER_PENDING_SHIPMENT
-                        - MALL_ORDER_SHIPPED
-                        - MALL_ORDER_COMPLETED
-                        - MALL_ORDER_CANCELLED
-                        - MALL_ORDER_FAILED
+                        - ORDER_STATUS_UNSPECIFIED
+                        - PAYMENT_PROCESSING
+                        - PENDING_SHIPMENT
+                        - SHIPPED
+                        - RECEIVED
+                        - CANCELLED
+                        - PAYMENT_FAILED
                     type: string
                     format: enum
                 points:
@@ -2459,9 +2457,7 @@ components:
                 status:
                     enum:
                         - ORDER_STATUS_UNSPECIFIED
-                        - PENDING
                         - PAYMENT_PROCESSING
-                        - PAID
                         - PENDING_SHIPMENT
                         - SHIPPED
                         - RECEIVED
@@ -2736,9 +2732,7 @@ components:
                 status:
                     enum:
                         - ORDER_STATUS_UNSPECIFIED
-                        - PENDING
                         - PAYMENT_PROCESSING
-                        - PAID
                         - PENDING_SHIPMENT
                         - SHIPPED
                         - RECEIVED
