@@ -6,10 +6,11 @@ info:
     title: ""
     version: 0.0.1
 paths:
-    /openapi/points/auth/session/refresh:
+   /openapi/points/auth/session/refresh:
         post:
             tags:
-                - AuthTicketService
+                - 免登票据认证服务
+            "summary": "刷新会话"
             description: 刷新会话
             operationId: AuthTicketService_RefreshSession
             responses:
@@ -19,10 +20,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/RefreshSessionResponse'
-    /openapi/points/auth/ticket/generate:
+   /openapi/points/auth/ticket/generate:
         post:
             tags:
-                - AuthTicketService
+                - 免登票据认证服务
+            "summary": "生成入场票据"
             description: 生成入场票据
             operationId: AuthTicketService_GenerateTicket
             requestBody:
@@ -38,10 +40,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/GenerateTicketResponse'
-    /openapi/points/auth/ticket/verify:
+   /openapi/points/auth/ticket/verify:
         get:
             tags:
-                - AuthTicketService
+                - 免登票据认证服务
+            "summary": "验证票据并建立会话"
             description: 验证票据并建立会话
             operationId: AuthTicketService_VerifyTicket
             parameters:
@@ -56,10 +59,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/VerifyTicketResponse'
-    /openapi/points/cards/{cardId}:
+   /openapi/points/cards/{cardId}:
         delete:
             tags:
-                - GoodsManagement
+                - 商品管理服务
+            "summary": "删除卡密"
             description: 删除卡密
             operationId: GoodsManagement_DeleteCard
             parameters:
@@ -76,10 +80,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/DeleteCardReply'
-    /openapi/points/cards/{cardId}/status:
+   /openapi/points/cards/{cardId}/status:
         put:
             tags:
-                - GoodsManagement
+                - 商品管理服务
+            "summary": "更新卡密状态"
             description: 更新卡密状态
             operationId: GoodsManagement_UpdateCardStatus
             parameters:
@@ -102,10 +107,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/UpdateCardStatusReply'
-    /openapi/points/good/cards/batch/{goodsId}:
+   /openapi/points/good/cards/batch/{goodsId}:
         post:
             tags:
-                - GoodsManagement
+                - 商品管理服务
+            "summary": "批量上传卡密（虚拟卡商品 - 手动输入）"
             description: 批量上传卡密（虚拟卡商品 - 手动输入）
             operationId: GoodsManagement_BatchUploadCards
             parameters:
@@ -128,10 +134,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/BatchUploadCardsReply'
-    /openapi/points/goods:
+   /openapi/points/goods:
         get:
             tags:
-                - GoodsManagement
+                - 商品管理服务
+            "summary": "获取商品列表"
             description: 获取商品列表
             operationId: GoodsManagement_ListGoodsManagement
             parameters:
@@ -153,12 +160,7 @@ paths:
                 - name: type
                   in: query
                   schema:
-                    enum:
-                        - GOODS_TYPE_UNSPECIFIED
-                        - PHYSICAL
-                        - VIRTUAL
                     type: string
-                    format: enum
                 - name: status
                   in: query
                   schema:
@@ -185,7 +187,8 @@ paths:
                                 $ref: '#/components/schemas/ListGoodsManagementReply'
         post:
             tags:
-                - GoodsManagement
+                - 商品管理服务
+            "summary": "创建商品"
             description: 创建商品
             operationId: GoodsManagement_CreateGoodsManagement
             requestBody:
@@ -201,10 +204,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/CreateGoodsManagementReply'
-    /openapi/points/goods/cards/import/{goodsId}:
+   /openapi/points/goods/cards/import/{goodsId}:
         post:
             tags:
-                - GoodsManagement
+                - 商品管理服务
+            "summary": "Excel 批量导入卡密（虚拟卡商品 - Excel 文件）"
             description: Excel 批量导入卡密（虚拟卡商品 - Excel 文件）
             operationId: GoodsManagement_ImportCardsFromExcel
             parameters:
@@ -227,10 +231,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ImportCardsFromExcelReply'
-    /openapi/points/goods/cards/{goodsId}:
+   /openapi/points/goods/cards/{goodsId}:
         get:
             tags:
-                - GoodsManagement
+                - 商品管理服务
+            "summary": "获取卡密列表"
             description: 获取卡密列表
             operationId: GoodsManagement_ListCards
             parameters:
@@ -271,10 +276,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ListCardsReply'
-    /openapi/points/goods/{id}:
+   /openapi/points/goods/{id}:
         get:
             tags:
-                - GoodsManagement
+                - 商品管理服务
+            "summary": "获取商品详情"
             description: 获取商品详情
             operationId: GoodsManagement_GetGoodsManagement
             parameters:
@@ -293,7 +299,8 @@ paths:
                                 $ref: '#/components/schemas/GetGoodsManagementReply'
         put:
             tags:
-                - GoodsManagement
+                - 商品管理服务
+            "summary": "更新商品"
             description: 更新商品
             operationId: GoodsManagement_UpdateGoodsManagement
             parameters:
@@ -318,7 +325,8 @@ paths:
                                 $ref: '#/components/schemas/UpdateGoodsManagementReply'
         delete:
             tags:
-                - GoodsManagement
+                - 商品管理服务
+            "summary": "删除商品"
             description: 删除商品
             operationId: GoodsManagement_DeleteGoodsManagement
             parameters:
@@ -335,10 +343,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/DeleteGoodsManagementReply'
-    /openapi/points/logistics-companies:
+   /openapi/points/logistics-companies:
         get:
             tags:
-                - LogisticsManagementService
+                - 物流管理服务
+            "summary": "获取物流公司列表"
             description: 获取物流公司列表
             operationId: LogisticsManagementService_ListLogisticsCompanies
             parameters:
@@ -369,7 +378,8 @@ paths:
                                 $ref: '#/components/schemas/ListLogisticsCompaniesResponse'
         post:
             tags:
-                - LogisticsManagementService
+                - 物流管理服务
+            "summary": "创建物流公司"
             description: 创建物流公司
             operationId: LogisticsManagementService_CreateLogisticsCompany
             requestBody:
@@ -385,10 +395,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/CreateLogisticsCompanyResponse'
-    /openapi/points/logistics-companies/{id}:
+   /openapi/points/logistics-companies/{id}:
         get:
             tags:
-                - LogisticsManagementService
+                - 物流管理服务
+            "summary": "获取物流公司详情"
             description: 获取物流公司详情
             operationId: LogisticsManagementService_GetLogisticsCompany
             parameters:
@@ -407,7 +418,8 @@ paths:
                                 $ref: '#/components/schemas/GetLogisticsCompanyResponse'
         put:
             tags:
-                - LogisticsManagementService
+                - 物流管理服务
+            "summary": "更新物流公司"
             description: 更新物流公司
             operationId: LogisticsManagementService_UpdateLogisticsCompany
             parameters:
@@ -432,7 +444,8 @@ paths:
                                 $ref: '#/components/schemas/UpdateLogisticsCompanyResponse'
         delete:
             tags:
-                - LogisticsManagementService
+                - 物流管理服务
+            "summary": "删除物流公司"
             description: 删除物流公司
             operationId: LogisticsManagementService_DeleteLogisticsCompany
             parameters:
@@ -449,10 +462,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/DeleteLogisticsCompanyResponse'
-    /points/h5/addresses:
+   /points/h5/addresses:
         get:
             tags:
                 - MallService
+            "summary": "获取收货地址列表"
             description: 获取收货地址列表
             operationId: MallService_ListAddresses
             responses:
@@ -465,6 +479,7 @@ paths:
         post:
             tags:
                 - MallService
+            "summary": "创建收货地址"
             description: 创建收货地址
             operationId: MallService_CreateAddress
             requestBody:
@@ -480,10 +495,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/CreateMallAddressResponse'
-    /points/h5/addresses/default:
+   /points/h5/addresses/default:
         get:
             tags:
                 - MallService
+            "summary": "获取默认地址"
             description: 获取默认地址
             operationId: MallService_GetDefaultAddress
             responses:
@@ -493,10 +509,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/GetDefaultMallAddressResponse'
-    /points/h5/addresses/{id}:
+   /points/h5/addresses/{id}:
         put:
             tags:
                 - MallService
+            "summary": "更新收货地址"
             description: 更新收货地址
             operationId: MallService_UpdateAddress
             parameters:
@@ -521,6 +538,7 @@ paths:
         delete:
             tags:
                 - MallService
+            "summary": "删除收货地址"
             description: 删除收货地址
             operationId: MallService_DeleteAddress
             parameters:
@@ -536,10 +554,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/DeleteMallAddressResponse'
-    /points/h5/addresses/{id}/default:
+   /points/h5/addresses/{id}/default:
         put:
             tags:
                 - MallService
+            "summary": "设置默认地址"
             description: 设置默认地址
             operationId: MallService_SetDefaultAddress
             parameters:
@@ -561,10 +580,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/SetDefaultMallAddressResponse'
-    /points/h5/categories:
+   /points/h5/categories:
         get:
             tags:
                 - MallService
+            "summary": "获取商品分类列表"
             description: 获取商品分类列表
             operationId: MallService_ListCategories
             parameters:
@@ -579,10 +599,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ListMallCategoriesResponse'
-    /points/h5/orders:
+   /points/h5/orders:
         get:
             tags:
                 - MallService
+            "summary": "获取订单列表"
             description: 获取订单列表
             operationId: MallService_ListOrders
             parameters:
@@ -610,6 +631,7 @@ paths:
         post:
             tags:
                 - MallService
+            "summary": "创建订单"
             description: 创建订单
             operationId: MallService_CreateOrder
             requestBody:
@@ -625,16 +647,21 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/CreateMallOrderResponse'
-    /points/h5/orders/{orderId}:
+   /points/h5/orders/{orderId}:
         get:
             tags:
                 - MallService
+            "summary": "获取订单详情"
             description: 获取订单详情
             operationId: MallService_GetOrder
             parameters:
                 - name: orderId
                   in: path
                   required: true
+                  schema:
+                    type: string
+                - name: lang
+                  in: query
                   schema:
                     type: string
             responses:
@@ -644,10 +671,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/GetMallOrderResponse'
-    /points/h5/orders/{orderId}/confirm:
+   /points/h5/orders/{orderId}/confirm:
         put:
             tags:
                 - MallService
+            "summary": "确认收货"
             description: 确认收货
             operationId: MallService_ConfirmReceipt
             parameters:
@@ -669,10 +697,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ConfirmReceiptResponse'
-    /points/h5/products:
+   /points/h5/products:
         get:
             tags:
                 - MallService
+            "summary": "获取商品列表"
             description: 获取商品列表
             operationId: MallService_ListProducts
             parameters:
@@ -705,10 +734,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ListMallProductsResponse'
-    /points/h5/products/{productId}:
+   /points/h5/products/{productId}:
         get:
             tags:
                 - MallService
+            "summary": "获取商品详情"
             description: 获取商品详情
             operationId: MallService_GetProduct
             parameters:
@@ -728,10 +758,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/GetMallProductResponse'
-    /points/h5/user/info:
+   /points/h5/user/info:
         get:
             tags:
                 - MallService
+            "summary": "获取用户信息"
             description: 获取用户信息
             operationId: MallService_GetUserInfo
             responses:
@@ -741,7 +772,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/GetMallUserInfoResponse'
-    /openapi/points/malls:
+   /openapi/points/malls:
         get:
             tags:
                 - MallManagement
@@ -789,7 +820,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/CreateMallReply'
-    /openapi/points/malls/{mallCode}:
+   /openapi/points/malls/{mallCode}:
         get:
             tags:
                 - MallManagement
@@ -830,7 +861,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/UpdateMallReply'
-    /openapi/points/malls/{mallCode}/api-keys:
+   /openapi/points/malls/{mallCode}/api-keys:
         get:
             tags:
                 - MallManagement
@@ -885,7 +916,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/CreateMallApiKeyReply'
-    /openapi/points/malls/{mallCode}/api-keys/{apiKeyId}/reset-secret:
+   /openapi/points/malls/{mallCode}/api-keys/{apiKeyId}/reset-secret:
         post:
             tags:
                 - MallManagement
@@ -914,7 +945,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ResetMallApiKeySecretReply'
-    /openapi/points/malls/{mallCode}/api-keys/{apiKeyId}/toggle-status:
+   /openapi/points/malls/{mallCode}/api-keys/{apiKeyId}/toggle-status:
         post:
             tags:
                 - MallManagement
@@ -943,7 +974,31 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ToggleMallApiKeyStatusReply'
-    /openapi/points/malls/{mallCode}/disable:
+   /openapi/points/malls/{mallCode}/config:
+        patch:
+            tags:
+                - MallManagement
+            operationId: MallManagement_UpdateMallConfig
+            parameters:
+                - name: mallCode
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateMallConfigRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/UpdateMallConfigReply'
+   /openapi/points/malls/{mallCode}/disable:
         post:
             tags:
                 - MallManagement
@@ -967,10 +1022,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/DisableMallReply'
-    /openapi/points/orders:
+   /openapi/points/orders:
         get:
             tags:
-                - OrderManagement
+                - 订单管理服务
+            "summary": "获取订单列表"
             description: 获取订单列表
             operationId: OrderManagement_ListOrderManagement
             parameters:
@@ -1033,10 +1089,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ListOrderManagementReply'
-    /openapi/points/orders/{id}:
+   /openapi/points/orders/{id}:
         get:
             tags:
-                - OrderManagement
+                - 订单管理服务
+            "summary": "获取订单详情"
             description: 获取订单详情
             operationId: OrderManagement_GetOrderManagement
             parameters:
@@ -1055,7 +1112,8 @@ paths:
                                 $ref: '#/components/schemas/GetOrderManagementReply'
         put:
             tags:
-                - OrderManagement
+                - 订单管理服务
+            "summary": "更新订单"
             description: 更新订单
             operationId: OrderManagement_UpdateOrderManagement
             parameters:
@@ -1080,7 +1138,8 @@ paths:
                                 $ref: '#/components/schemas/UpdateOrderManagementReply'
         delete:
             tags:
-                - OrderManagement
+                - 订单管理服务
+            "summary": "删除订单"
             description: 删除订单
             operationId: OrderManagement_DeleteOrderManagement
             parameters:
@@ -1097,10 +1156,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/DeleteOrderManagementReply'
-    /openapi/points/orders/{id}/ship:
+   /openapi/points/orders/{id}/ship:
         post:
             tags:
-                - OrderManagement
+                - 订单管理服务
+            "summary": "发货"
             description: 发货
             operationId: OrderManagement_ShipOrder
             parameters:
@@ -1123,10 +1183,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ShipOrderReply'
-    /openapi/points/product-categories:
+   /openapi/points/product-categories:
         get:
             tags:
-                - ProductCategories
+                - 商品分类管理服务
+            "summary": "获取商品分类列表"
             description: 获取商品分类列表
             operationId: ProductCategories_ListProductCategories
             parameters:
@@ -1161,7 +1222,8 @@ paths:
                                 $ref: '#/components/schemas/ListProductCategoriesReply'
         post:
             tags:
-                - ProductCategories
+                - 商品分类管理服务
+            "summary": "创建商品分类"
             description: 创建商品分类
             operationId: ProductCategories_CreateProductCategories
             requestBody:
@@ -1177,10 +1239,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/CreateProductCategoriesReply'
-    /openapi/points/product-categories/{id}:
+   /openapi/points/product-categories/{id}:
         get:
             tags:
-                - ProductCategories
+                - 商品分类管理服务
+            "summary": "获取商品分类详情"
             description: 获取商品分类详情
             operationId: ProductCategories_GetProductCategories
             parameters:
@@ -1199,7 +1262,8 @@ paths:
                                 $ref: '#/components/schemas/GetProductCategoriesReply'
         put:
             tags:
-                - ProductCategories
+                - 商品分类管理服务
+            "summary": "更新商品分类"
             description: 更新商品分类
             operationId: ProductCategories_UpdateProductCategories
             parameters:
@@ -1224,7 +1288,8 @@ paths:
                                 $ref: '#/components/schemas/UpdateProductCategoriesReply'
         delete:
             tags:
-                - ProductCategories
+                - 商品分类管理服务
+            "summary": "删除商品分类"
             description: 删除商品分类
             operationId: ProductCategories_DeleteProductCategories
             parameters:
@@ -1241,10 +1306,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/DeleteProductCategoriesReply'
-    /openapi/points/webhook/confirm:
+   /openapi/points/webhook/confirm:
         post:
             tags:
-                - WebhookService
+                - Webhook 服务
+            "summary": "商户确认 Webhook 处理结果"
             description: 商户确认 Webhook 处理结果
             operationId: WebhookService_ConfirmWebhook
             requestBody:
@@ -1260,10 +1326,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ConfirmWebhookReply'
-    /openapi/points/webhook/events:
+   /openapi/points/webhook/events:
         get:
             tags:
-                - WebhookService
+                - Webhook 服务
+            "summary": "查询 Webhook 事件列表"
             description: 查询 Webhook 事件列表
             operationId: WebhookService_ListWebhookEvents
             parameters:
@@ -1301,10 +1368,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ListWebhookEventsReply'
-    /openapi/points/webhook/events/{eventId}:
+   /openapi/points/webhook/events/{eventId}:
         get:
             tags:
-                - WebhookService
+                - Webhook 服务
+            "summary": "查询 Webhook 事件详情"
             description: 查询 Webhook 事件详情
             operationId: WebhookService_GetWebhookEvent
             parameters:
@@ -1320,10 +1388,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/GetWebhookEventReply'
-    /openapi/points/webhook/events/{eventId}/retry:
+   /openapi/points/webhook/events/{eventId}/retry:
         post:
             tags:
-                - WebhookService
+                - Webhook 服务
+            "summary": "手动重试 Webhook"
             description: 手动重试 Webhook
             operationId: WebhookService_RetryWebhook
             parameters:
@@ -1447,12 +1516,7 @@ components:
                     type: integer
                     format: int32
                 type:
-                    enum:
-                        - GOODS_TYPE_UNSPECIFIED
-                        - PHYSICAL
-                        - VIRTUAL
                     type: string
-                    format: enum
                 stock:
                     type: integer
                     format: int32
@@ -1597,6 +1661,11 @@ components:
                     format: date-time
                 webhookUrl:
                     type: string
+                autoConfirmEnabled:
+                    type: boolean
+                autoConfirmDays:
+                    type: integer
+                    format: int32
         CreateProductCategoriesReply:
             type: object
             properties:
@@ -1839,6 +1908,8 @@ components:
                 updatedAt:
                     type: string
                     format: date-time
+                name:
+                    type: string
             description: 商品分类信息
         GoodsInfo:
             type: object
@@ -2240,6 +2311,11 @@ components:
                     format: date-time
                 webhookUrl:
                     type: string
+                autoConfirmEnabled:
+                    type: boolean
+                autoConfirmDays:
+                    type: integer
+                    format: int32
         MallMerchantInfo:
             type: object
             properties:
@@ -2709,6 +2785,25 @@ components:
                 address:
                     $ref: '#/components/schemas/MallAddressInfo'
             description: 更新地址响应
+        UpdateMallConfigReply:
+            type: object
+            properties:
+                mall:
+                    $ref: '#/components/schemas/MallManagementInfo'
+                message:
+                    type: string
+        UpdateMallConfigRequest:
+            type: object
+            properties:
+                mallCode:
+                    type: string
+                webhookUrl:
+                    type: string
+                autoConfirmEnabled:
+                    type: boolean
+                autoConfirmDays:
+                    type: integer
+                    format: int32
         UpdateMallReply:
             type: object
             properties:
@@ -2855,17 +2950,17 @@ components:
                     format: date-time
             description: Webhook 事件信息
 tags:
-    - name: AuthTicketService
+    - name: 免登票据认证服务
       description: 免登票据认证服务
-    - name: GoodsManagement
+    - name: 商品管理服务
       description: 商品管理服务
-    - name: LogisticsManagementService
+    - name: 物流管理服务
       description: 物流管理服务
     - name: MallManagement
     - name: MallService
-    - name: OrderManagement
+    - name: 订单管理服务
       description: 订单管理服务
-    - name: ProductCategories
+    - name: 商品分类管理服务
       description: 商品分类管理服务
-    - name: WebhookService
+    - name: Webhook 服务
       description: Webhook 服务
